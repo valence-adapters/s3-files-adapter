@@ -1,0 +1,8 @@
+.sf
+.sfdx
+.git
+.DS_Store
+
+node_modules/
+
+**/lwc/jsconfig.json

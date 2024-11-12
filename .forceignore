@@ -1,0 +1,5 @@
+force-app/**/LICENSE
+force-app/**/README.md
+**/jsconfig.json
+
+**/.eslintrc.json

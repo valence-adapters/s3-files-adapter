@@ -1,0 +1,88 @@
+<template>
+	<lightning-layout>
+		<lightning-layout-item padding="around-small" size="12">
+			<lightning-tabset class="slds-p-around_small">
+				<!--                    -->
+				<!-- S3 Target Selector -->
+				<!--                    -->
+				<lightning-tab label="Source">
+					<lightning-spinner lwc:if={loading}></lightning-spinner>
+					<h3>Select the folder to read files from:</h3>
+					<lightning-tree items={s3Tree} selected-item={configuration.path} onselect={treeSelected}> </lightning-tree>
+				</lightning-tab>
+				<!--          -->
+				<!-- SETTINGS -->
+				<!--         -->
+				<lightning-tab label="Settings">
+					<lightning-layout multiple-rows>
+						<lightning-layout-item size="12" medium-device-size="7">
+							<lightning-input
+								label="Field Separator"
+								placeholder=","
+								name="fieldSeparator"
+								onblur={trackChange}
+								value={configuration.fieldSeparator}
+							></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" medium-device-size="7">
+							<lightning-input
+								label="Maximum Megabytes to Process Each Batch"
+								type="number"
+								min="0"
+								max="5"
+								step="0.1"
+								placeholder="1.0"
+								field-level-help="Max portion of file to be processed in each batch"
+								name="mbsPerBatch"
+								onchange={trackChange}
+								value={configuration.mbsPerBatch}
+							></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" medium-device-size="7">
+							<lightning-input
+								label="Max S3 Objects to Enqueue Each Plan Phase"
+								type="number"
+								min="1"
+								max="75"
+								step="1"
+								placeholder="25"
+								field-level-help="Valence will enqueue discovered files in batches. This field sets the max files processed in each batch"
+								name="maxObjectsPerPlan"
+								onchange={trackChange}
+								value={configuration.maxObjectsPerPlan}
+							></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" medium-device-size="7">
+							<lightning-input
+								label="Bytes retrieved when building file headers"
+								type="number"
+								min="1000"
+								max="50000"
+								step="1"
+								placeholder="5000"
+								field-level-help="When peeking the top of a file to discover headers and first example row, how many bytes should be retried from the top of the file?"
+								name="bytesForHeaderFetch"
+								onchange={trackChange}
+								value={configuration.bytesForHeaderFetch}
+							></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" medium-device-size="7">
+							<lightning-input
+								label="Additional bytes to read behind per batch"
+								type="number"
+								min="1000"
+								max="50000"
+								step="1"
+								placeholder="10000"
+								field-level-help="When batching a CSV file, we need to include a number of bytes behind our assignment to make sure we can start on a complete row"
+								name="bytesForFetchPrefix"
+								onchange={trackChange}
+								value={configuration.bytesForFetchPrefix}
+							></lightning-input>
+						</lightning-layout-item>
+					</lightning-layout>
+				</lightning-tab>
+			</lightning-tabset>
+		</lightning-layout-item>
+	</lightning-layout>
+</template>
